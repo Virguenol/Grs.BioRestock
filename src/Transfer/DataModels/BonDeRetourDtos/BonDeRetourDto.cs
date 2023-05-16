@@ -13,12 +13,10 @@ namespace Grs.BioRestock.Transfer.DataModels.BonDeRetourDtos
     {
         public int Id { get; set; }
         public string Code { get; set; }
-        public string ClientName { get; set; }
-        public string ArticleName { get; set; }
+        public int CustomerId { get; set; }
         public AnomalyType AnomalyType { get; set; } = AnomalyType.Produit_Introuvable;
         public string Reference { get; set; }
-        public int Quantity { get; set; }
         public BonDeRetourStatus Status { get; set; } = BonDeRetourStatus.Nouveau;
-        public BonDeRetourDepot Depot { get; set; } = 0;
+        public BonDeRetourDepot Depot { get; set; } = BonDeRetourDepot.Casablanca;
     }
 }

@@ -11,16 +11,16 @@ namespace Grs.BioRestock.Server.Controllers.BonDeRetour
 {
     public class CustomerController : ControllerBase
     {
-        private readonly IClientService _clientService;
+        private readonly ICustomerService _clientService;
 
-        public CustomerController(IClientService clientService)
+        public CustomerController(ICustomerService clientService)
         {
             _clientService = clientService;
         }
         [HttpGet(nameof(GetAllClient))]
-        public async Task<Result<List<Customer>>> GetAllClient()
+        public async Task<Result<List<CustomerDto>>> GetAllClient()
         {
-            return await _clientService.GetClients();
+            return await _clientService.GetCustomer();
         }
     }
 }

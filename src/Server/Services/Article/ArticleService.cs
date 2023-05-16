@@ -9,6 +9,7 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -16,7 +17,9 @@ namespace Grs.BioRestock.Server.Services.Article
 {
     public interface IArticleService
     {
-        Task<Result<List<GetArticleDto>>> GetArticles();
+        Task<Result<List<ArticleDto>>> GetArticle();
+        Task<Result<string>> AddArcticle(ArticleDto customer);
+        Task<Result<string>> DeleteArticle(int id);
     }
     public class ArticleService : IArticleService
     {
@@ -33,11 +36,55 @@ namespace Grs.BioRestock.Server.Services.Article
             _context = context;
         }
 
-        public async Task<Result<List<GetArticleDto>>> GetArticles()
+        public async Task<Result<string>> AddArcticle(ArticleDto request)
         {
-            var bonderetour = await _context.Articles.ToListAsync();
-            var bonderetourResponse = bonderetour.Adapt<List<GetArticleDto>>();
-            return await Result<List<GetArticleDto>>.SuccessAsync(bonderetourResponse);
+            if (request.Id == 0)
+            {
+                var article = request.Adapt<Domain.Entities.Article>();
+                await _context.Articles.AddAsync(article);
+                await _context.SaveChangesAsync();
+                return await Result<string>.SuccessAsync("le bordereau de retour créé");
+            }
+            else
+            {
+                var existingArticle =
+                    await _context.Articles.SingleOrDefaultAsync(x => x.Id == request.Id);
+                if (existingArticle == null)
+                {
+                    return await Result<string>.SuccessAsync("le bordereau de retour n'existe pas");
+                }
+                else
+                {
+                    existingArticle.Name = request.Name;
+                    existingArticle.Designation = request.Designation;
+                    existingArticle.Price = request.Price;
+
+                    _context.Articles.Update(existingArticle);
+                    await _context.SaveChangesAsync();
+                    return await Result<string>.SuccessAsync("l'article est mis à jour");
+                }
+            }
+        }
+        public async Task<Result<string>> DeleteArticle(int id)
+        {
+            var existingArticle = await _context.Articles.FirstOrDefaultAsync(x => x.Id == id);
+            if (existingArticle != null)
+            {
+                _context.Articles.Remove(existingArticle);
+                await _context.SaveChangesAsync();
+                return await Result<string>.SuccessAsync("l'article supprimé");
+            }
+            else
+            {
+                return await Result<string>.FailAsync("l'article n'existe pas");
+            }
+        }
+
+        public async Task<Result<List<ArticleDto>>> GetArticle()
+        {
+            var article = await _context.Customers.OrderByDescending(x => x.Id).ToListAsync();
+            var articleResponse = article.Adapt<List<ArticleDto>>();
+            return await Result<List<ArticleDto>>.SuccessAsync(articleResponse);
         }
     }
 }

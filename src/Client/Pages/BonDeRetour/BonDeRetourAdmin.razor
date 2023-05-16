@@ -24,21 +24,17 @@ else
                     <MudTh>id</MudTh>
                     <MudTh>Code</MudTh>
                     <MudTh>Nom Client</MudTh>
-                    <MudTh>Nom Article </MudTh>
                     <MudTh>Lot Produit </MudTh>
                     <MudTh>Réference </MudTh>
-                    <MudTh>Quantité </MudTh>
                     <MudTh>Status </MudTh>
                     <MudTh>Action</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
                     <MudTd DataLabel="Code">@context.Code</MudTd>
-                    <MudTd DataLabel="Nom Client">@context.ClientName</MudTd>
-                    <MudTd DataLabel="Nom Article">@context.ArticleName</MudTd>
+                    <MudTd DataLabel="Nom Client">@context.CustomerId</MudTd>
                     <MudTd DataLabel="Lot Produit">@context.AnomalyType</MudTd>
                     <MudTd DataLabel="Réference">@context.Reference</MudTd>
-                    <MudTd DataLabel="Quantité">@context.Quantity</MudTd>
                     <MudTd DataLabel="Status">@context.Status</MudTd>
                     <MudTd>
                         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(() => DeleteDeRetour(@context.Id))"></MudButton>

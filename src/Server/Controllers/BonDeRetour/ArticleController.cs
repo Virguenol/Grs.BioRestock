@@ -17,9 +17,9 @@ namespace Grs.BioRestock.Server.Controllers.BonDeRetour
             _articleService = articleService;
         }
         [HttpGet(nameof(GetAllArticle))]
-        public async Task<Result<List<GetArticleDto>>> GetAllArticle()
+        public async Task<Result<List<ArticleDto>>> GetAllArticle()
         {
-            return await _articleService.GetArticles();
+            return await _articleService.GetArticle();
         }
     }
 }

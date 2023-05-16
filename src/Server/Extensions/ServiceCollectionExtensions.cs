@@ -51,6 +51,7 @@ using Grs.BioRestock.Server.Services.BonDeRetourService;
 using Grs.BioRestock.Domain.Entities;
 using Grs.BioRestock.Server.Services.Article;
 using Grs.BioRestock.Server.Services.Cliient;
+using Grs.BioRestock.Server.Services.BonDeRetourArtile;
 
 namespace Grs.BioRestock.Server.Extensions
 {
@@ -256,7 +257,8 @@ namespace Grs.BioRestock.Server.Extensions
             services.AddScoped<IBonDeRetour, BonDeRetourService>();
 
             services.AddScoped<IArticleService, ArticleService>();
-            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            //services.AddScoped<IBonDeRetourArticleService, BonDeRetourArticleService>();
 
             services.AddTransient<ITemplateService, TemplateService>();
 

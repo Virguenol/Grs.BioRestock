@@ -13,14 +13,11 @@ namespace Grs.BioRestock.Domain.Entities
     public class BonDeRetour : AuditableEntity<int>
     {
         public string Code { get; set; }
-        public string ClientName { get; set; }
-        public string ArticleName { get; set; }
+        public int CustomerId { get; set; }
         public AnomalyType AnomalyType { get; set; } = AnomalyType.Produit_Introuvable;
         public string Reference { get; set; }
-        public int Quantity { get; set; }
         public BonDeRetourStatus Status { get; set; } = BonDeRetourStatus.Nouveau;
         public BonDeRetourDepot Depot { get; set; } = BonDeRetourDepot.Casablanca;
-        public List<Article> Articles { get; set; }
         public List<Customer> Customers { get; set; }
     }
 }

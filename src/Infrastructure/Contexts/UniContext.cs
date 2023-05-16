@@ -22,6 +22,7 @@ namespace Grs.BioRestock.Infrastructure.Contexts
         public virtual DbSet<BonDeRetour> BonDeRetours { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<BonDeRetourArticle> BonDeRetourArticles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +43,12 @@ namespace Grs.BioRestock.Infrastructure.Contexts
             modelBuilder.Entity<Domain.Entities.Article>(entity =>
             {
                 entity.ToTable("Article");
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Domain.Entities.BonDeRetourArticle>(entity =>
+            {
+                entity.ToTable("BonDeRetourArticle");
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 

@@ -13,8 +13,8 @@
     </TitleContent>
     <DialogContent>
         <MudTextField For="@(() => bonDeRetourModel.Id)" @bind-Value="bonDeRetourModel.Id" Label="@Localizer["ID Bon"]" Disabled />
-        <MudTextField For="@(() => bonDeRetourModel.ClientName)" @bind-Value="bonDeRetourModel.ClientName" Label="@Localizer["Nom Article"]" />
-        <MudTextField For="@(() => bonDeRetourModel.ArticleName)" @bind-Value="bonDeRetourModel.ArticleName" Label="@Localizer["Nom Client"]" />
+        <MudTextField For="@(() => bonDeRetourModel.Code)" @bind-Value="bonDeRetourModel.Code" Label="@Localizer["Nom Article"]" />
+        <MudTextField For="@(() => bonDeRetourModel.Reference)" @bind-Value="bonDeRetourModel.Reference" Label="@Localizer["Nom Client"]" />
         <MudSpacer />
             <InputSelect @bind-Value="bonDeRetourModel.Depot" Variant="Variant.Filled" Label="@Localizer["ID Bon"]" style="width:100%; height:25px; border-radius:5px;">
         @foreach (var depot in Enum.GetValues(typeof(BonDeRetourDepot)))

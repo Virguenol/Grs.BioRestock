@@ -22,11 +22,9 @@ else
                 <HeaderContent>
                     <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.Id)">id</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.Code)">Code</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.ClientName)">Nom Client</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.ArticleName)">Nom Article</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.CustomerId)">Nom Client</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.AnomalyType)">Lot Produit</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.Reference)">Réference</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.Quantity)">Quantité</MudTableSortLabel></MudTh>
                     <MudTh><MudTableSortLabel SortBy="new Func<BonDeRetourDto, object>(x => x.Status)">Status</MudTableSortLabel></MudTh>
                     <MudTh>Action</MudTh>
                 </HeaderContent>
@@ -35,13 +33,11 @@ else
                     <MudTd DataLabel="Code">
                         <MudHighlighter Text="@context.Code" HighlightedText="@_searchString" />
                     </MudTd>
-                    <MudTd DataLabel="Nom Client">@context.ClientName</MudTd>
-                    <MudTd DataLabel="Nom Article">@context.ArticleName</MudTd>
+                    <MudTd DataLabel="Nom Client">@context.CustomerId</MudTd>
                     <MudTd DataLabel="Lot Produit">@context.AnomalyType</MudTd>
                     <MudTd DataLabel="Reference">
                         <MudHighlighter Text="@context.Reference" HighlightedText="@_searchString" />
                     </MudTd>
-                    <MudTd DataLabel="Quantité">@context.Quantity</MudTd>
                     <MudTd DataLabel="Status">@context.Status</MudTd>
 
                     <MudTd DataLabel="Actions" Style="text-align: right">
@@ -124,8 +120,8 @@ else
                 parameters.Add(nameof(ModelBondeRetour.bonDeRetourModel), new BonDeRetourDto
                     {
                         Id = bonDeRetourx.Id,
-                        ArticleName = bonDeRetourx.ArticleName,
-                        ClientName = bonDeRetourx.ClientName
+                        Code = bonDeRetourx.Code,
+                        Reference = bonDeRetourx.Reference
                     });
             }
         }

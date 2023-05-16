@@ -39,11 +39,9 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ArticleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     AnomalyType = table.Column<int>(type: "int", nullable: false),
                     Reference = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Depot = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -115,15 +113,14 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Article",
+                name: "BonDeRetourArticle",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Designation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(28,8)", nullable: false),
-                    BonDeRetourId = table.Column<int>(type: "int", nullable: true),
+                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    BonDeretourId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -131,12 +128,13 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.PrimaryKey("PK_BonDeRetourArticle", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Article_BonDeRetour_BonDeRetourId",
-                        column: x => x.BonDeRetourId,
+                        name: "FK_BonDeRetourArticle_BonDeRetour_BonDeretourId",
+                        column: x => x.BonDeretourId,
                         principalTable: "BonDeRetour",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -288,10 +286,51 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Article",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Designation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(28,8)", nullable: false),
+                    BonDeRetourId = table.Column<int>(type: "int", nullable: true),
+                    BonDeRetourArticleId = table.Column<int>(type: "int", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Article_BonDeRetour_BonDeRetourId",
+                        column: x => x.BonDeRetourId,
+                        principalTable: "BonDeRetour",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Article_BonDeRetourArticle_BonDeRetourArticleId",
+                        column: x => x.BonDeRetourArticleId,
+                        principalTable: "BonDeRetourArticle",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_BonDeRetourArticleId",
+                table: "Article",
+                column: "BonDeRetourArticleId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Article_BonDeRetourId",
                 table: "Article",
                 column: "BonDeRetourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BonDeRetourArticle_BonDeretourId",
+                table: "BonDeRetourArticle",
+                column: "BonDeretourId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customer_BonDeRetourId",
@@ -377,7 +416,7 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                 schema: "Identity");
 
             migrationBuilder.DropTable(
-                name: "BonDeRetour");
+                name: "BonDeRetourArticle");
 
             migrationBuilder.DropTable(
                 name: "Roles",
@@ -386,6 +425,9 @@ namespace Grs.BioRestock.Infrastructure.Migrations
             migrationBuilder.DropTable(
                 name: "Users",
                 schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "BonDeRetour");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grs.BioRestock.Transfer.DataModels.Client
 {
-    public class AddCustomerDto
+    public class CustomerDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

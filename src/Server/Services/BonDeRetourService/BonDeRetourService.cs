@@ -62,13 +62,10 @@ namespace Grs.BioRestock.Server.Services.BonDeRetourService
                 {
                     existingBonDeRetour.Depot = request.Depot;
                     existingBonDeRetour.Code = request.Code;
-                    existingBonDeRetour.ArticleName = request.ArticleName;
-                    existingBonDeRetour.ClientName = request.ClientName;
+                    existingBonDeRetour.CustomerId = request.CustomerId;
                     existingBonDeRetour.AnomalyType = request.AnomalyType;
                     existingBonDeRetour.Reference = request.Reference;
-                    existingBonDeRetour.Quantity = request.Quantity;
 
-                    existingBonDeRetour.Quantity = request.Quantity;
                     _context.BonDeRetours.Update(existingBonDeRetour);
                     await _context.SaveChangesAsync();
                     return await Result<string>.SuccessAsync("le bon de retour est mis à jour"); 
@@ -92,7 +89,7 @@ namespace Grs.BioRestock.Server.Services.BonDeRetourService
 
         public async Task<Result<List<BonDeRetourDto>>> GetBonDeRetours()
         {
-            var bonderetour = await _context.BonDeRetours.OrderByDescending(x=>x.Id).Include(c => c.Articles).Include(c => c.Customers).ToListAsync();
+            var bonderetour = await _context.BonDeRetours.OrderByDescending(x=>x.Id).Include(c => c.Customers).ToListAsync();
             var bonderetourResponse = bonderetour.Adapt<List<BonDeRetourDto>>();
             return await Result<List<BonDeRetourDto>>.SuccessAsync(bonderetourResponse);
         }

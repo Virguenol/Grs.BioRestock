@@ -30,6 +30,9 @@ namespace Grs.BioRestock.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("BonDeRetourArticleId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("BonDeRetourId")
                         .HasColumnType("int");
 
@@ -56,6 +59,8 @@ namespace Grs.BioRestock.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BonDeRetourArticleId");
+
                     b.HasIndex("BonDeRetourId");
 
                     b.ToTable("Article", (string)null);
@@ -72,12 +77,6 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                     b.Property<int>("AnomalyType")
                         .HasColumnType("int");
 
-                    b.Property<string>("ArticleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -86,6 +85,9 @@ namespace Grs.BioRestock.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Depot")
                         .HasColumnType("int");
@@ -96,9 +98,6 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,6 +107,42 @@ namespace Grs.BioRestock.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BonDeRetour", (string)null);
+                });
+
+            modelBuilder.Entity("Grs.BioRestock.Domain.Entities.BonDeRetourArticle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BonDeretourId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BonDeretourId");
+
+                    b.ToTable("BonDeRetourArticle", (string)null);
                 });
 
             modelBuilder.Entity("Grs.BioRestock.Domain.Entities.Customer", b =>
@@ -459,18 +494,35 @@ namespace Grs.BioRestock.Infrastructure.Migrations
 
             modelBuilder.Entity("Grs.BioRestock.Domain.Entities.Article", b =>
                 {
-                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetour", "BonDeRetour")
+                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetourArticle", null)
                         .WithMany("Articles")
+                        .HasForeignKey("BonDeRetourArticleId");
+
+                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetour", "BonDeRetour")
+                        .WithMany()
                         .HasForeignKey("BonDeRetourId");
+
+                    b.Navigation("BonDeRetour");
+                });
+
+            modelBuilder.Entity("Grs.BioRestock.Domain.Entities.BonDeRetourArticle", b =>
+                {
+                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetour", "BonDeRetour")
+                        .WithMany()
+                        .HasForeignKey("BonDeretourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BonDeRetour");
                 });
 
             modelBuilder.Entity("Grs.BioRestock.Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetour", null)
+                    b.HasOne("Grs.BioRestock.Domain.Entities.BonDeRetour", "BonDeRetour")
                         .WithMany("Customers")
                         .HasForeignKey("BonDeRetourId");
+
+                    b.Navigation("BonDeRetour");
                 });
 
             modelBuilder.Entity("Grs.BioRestock.Infrastructure.Models.Identity.UniRoleClaim", b =>
@@ -528,9 +580,12 @@ namespace Grs.BioRestock.Infrastructure.Migrations
 
             modelBuilder.Entity("Grs.BioRestock.Domain.Entities.BonDeRetour", b =>
                 {
-                    b.Navigation("Articles");
-
                     b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("Grs.BioRestock.Domain.Entities.BonDeRetourArticle", b =>
+                {
+                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("Grs.BioRestock.Infrastructure.Models.Identity.UniRole", b =>

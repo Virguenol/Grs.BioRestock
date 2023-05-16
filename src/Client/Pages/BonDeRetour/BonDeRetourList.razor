@@ -9,7 +9,7 @@
 }
 else
 {
-  <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+  <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-0">
         <MudTabPanel Text="Liste Bon">
             <div class="mb-2 align-content: center;" Style="width: 100%">
                 <MudContainer Style="padding:0; margin:0; width:100%;">
@@ -18,21 +18,17 @@ else
                             <MudTh>id</MudTh>
                             <MudTh>Code</MudTh>
                             <MudTh>Nom Client</MudTh>
-                            <MudTh>Nom Article</MudTh>
                             <MudTh>Lot Produit</MudTh>
                             <MudTh>Réference</MudTh>
-                            <MudTh>Quantité</MudTh>
                             <MudTh>Status</MudTh>
                             <MudTh>Action</MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Id">@context.Id</MudTd>
                             <MudTd DataLabel="Code">@context.Code</MudTd>
-                            <MudTd DataLabel="Nom Client">@context.ClientName</MudTd>
-                            <MudTd DataLabel="Nom Article">@context.ArticleName</MudTd>
+                            <MudTd DataLabel="Nom Client">@context.CustomerId</MudTd>
                             <MudTd DataLabel="Lot Produit">@context.AnomalyType</MudTd>
                             <MudTd DataLabel="Réference">@context.Reference</MudTd>
-                            <MudTd DataLabel="Quantité">@context.Quantity</MudTd>
                             <MudTd DataLabel="Status">@context.Status</MudTd>
                             <MudTd>
                                 <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(() => DeleteDeRetour(@context.Id))">Delete</MudButton>
@@ -54,19 +50,16 @@ else
                             <MudTh>id</MudTh>
                             <MudTh>Code</MudTh>
                             <MudTh>Nom Client</MudTh>
-                            <MudTh>Nom Article </MudTh>
                             <MudTh>Lot Produit </MudTh>
                             <MudTh>Réference </MudTh>
-                            <MudTh>Quantité </MudTh>
                             <MudTh>Status </MudTh>
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Id">@context.Id</MudTd>
-                            <MudTd DataLabel="Code">@context.ArticleName</MudTd>
-                            <MudTd DataLabel="Nom Client">@context.ClientName</MudTd>
+                            <MudTd DataLabel="Code">@context.Code</MudTd>
+                            <MudTd DataLabel="Nom Client">@context.CustomerId</MudTd>
                             <MudTd DataLabel="Lot Produit">@context.AnomalyType</MudTd>
                             <MudTd DataLabel="Réference">@context.Reference</MudTd>
-                            <MudTd DataLabel="Quantité">@context.Quantity</MudTd>
                             <MudTd DataLabel="Status" Style="color:red;">@context.Status</MudTd>
                         </RowTemplate>
                         <PagerContent>

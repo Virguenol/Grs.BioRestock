@@ -1,5 +1,6 @@
 ﻿using Grs.BioRestock.Shared.Wrapper;
 using Grs.BioRestock.Transfer.DataModels.Article;
+using Grs.BioRestock.Transfer.DataModels.BonDeRetourArticle;
 using Grs.BioRestock.Transfer.DataModels.BonDeRetourDtos;
 using Grs.BioRestock.Transfer.DataModels.Client;
 using System;
@@ -40,10 +41,19 @@ namespace Grs.BioRestock.Client.Infrastructure.ApiClients
     public partial class BonDeRetourDtoResult : Result<BonDeRetourDto>
     {
     }
-    public partial class GetArticleDtoListResult : Result<GetArticleDto>
+    public partial class GetArticleDtoListResult : Result<ArticleDto>
     {
     }
-    public partial class CustomerListResult : Result<AddCustomerDto>
+    public partial class CustomerListResult : Result<CustomerDto>
+    {
+    }
+    public partial class ArticleDtoListResult : Result<List<ArticleDto>>
+    {
+    }
+    public partial class BonDeRetourArticleDtoListResult : Result<List<BonDeRetourArticleDto>>
+    {
+    }
+    public partial class CustomerDtoListResult : Result<List<CustomerDto>>
     {
     }
 }

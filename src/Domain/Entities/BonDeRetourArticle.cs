@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Grs.BioRestock.Domain.Entities
 {
-    public class Customer : AuditableEntity<int>
+    public class BonDeRetourArticle : AuditableEntity<int>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Adresse { get; set; }
+        public int ArticleId { get; set; }
+        public int BonDeretourId { get; set; }
         public BonDeRetour BonDeRetour { get; set; }
+        public List<Article> Articles { get; set; }
+        public int Quantity { get; set; }
     }
 }
